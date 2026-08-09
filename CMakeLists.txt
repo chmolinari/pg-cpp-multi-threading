@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+find_package(Boost REQUIRED COMPONENTS log)
+
 set(TARGET pgcppmt)
 add_executable(${TARGET})
 target_sources(
@@ -13,4 +15,10 @@ target_sources(
 
         PRIVATE
         main.cpp
+)
+target_link_libraries(
+        ${TARGET}
+
+        PRIVATE
+        Boost::log
 )
