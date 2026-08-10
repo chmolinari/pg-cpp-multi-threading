@@ -1,7 +1,9 @@
-#include <iostream>
+#include <cstdlib>
+
+#include <boost/log/trivial.hpp>
 
 int main()
 {
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
+    BOOST_LOG_TRIVIAL(info) << "This is a test.\n";
+    return EXIT_SUCCESS;
 }
