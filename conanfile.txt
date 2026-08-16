@@ -1,9 +1,0 @@
-[requires]
-boost/1.91.0
-
-[generators]
-CMakeConfigDeps
-
-[options]
-boost/*:shared=True
-boost/*:without_cobalt=True

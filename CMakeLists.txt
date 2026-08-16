@@ -5,9 +5,7 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
-include(runtime_dependencies)
+set(CMAKE_DEBUG_POSTFIX d)
 
 find_package(Boost REQUIRED COMPONENTS log)
 
@@ -25,4 +23,4 @@ target_link_libraries(
         PRIVATE
         Boost::log
 )
-add_runtime_dependencies_target(${TARGET})
+
