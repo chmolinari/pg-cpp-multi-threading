@@ -9,16 +9,16 @@ set(CMAKE_DEBUG_POSTFIX d)
 
 find_package(Boost CONFIG REQUIRED COMPONENTS log)
 
-set(TARGET pgcppmt)
-add_executable(${TARGET})
+set(BUILD_NAME pgcppmt)
+add_executable(${BUILD_NAME})
 target_sources(
-        ${TARGET}
+        ${BUILD_NAME}
 
         PRIVATE
         main.cpp
 )
 target_link_libraries(
-        ${TARGET}
+        ${BUILD_NAME}
 
         PRIVATE
         Boost::log
