@@ -7,7 +7,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_DEBUG_POSTFIX d)
 
-find_package(Boost REQUIRED COMPONENTS log)
+find_package(Boost CONFIG REQUIRED COMPONENTS log)
 
 set(TARGET pgcppmt)
 add_executable(${TARGET})
