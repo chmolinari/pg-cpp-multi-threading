@@ -9,6 +9,7 @@ int main()
 {
     cm::pg::cpp::mt::logging::Logger const logging_guard;
     BOOST_LOG_SEV(glog::get(), sl::trace) << "Program started.";
+    BOOST_LOG_SEV(glog::get(), sl::fatal) << "Fatal error.";
     BOOST_LOG_SEV(glog::get(), sl::trace) << "Program finished.";
     return EXIT_SUCCESS;
 }

@@ -35,22 +35,19 @@ namespace cm::pg::cpp::mt::logging
         return out_stream << static_cast<int>(severity_level);
     }
 
-    namespace
+    void Logger::set_console_sink()
     {
-        void init_logging()
+        auto get_backend = [](std::ostream& _destination) -> boost::shared_ptr<boost::log::sinks::text_ostream_backend>
         {
-            auto const logger{boost::log::core::get()};
-            boost::log::add_common_attributes();
-
-            /* === SINKS === */
-
-            // Console sink.
             const auto backend{boost::make_shared<boost::log::sinks::text_ostream_backend>()};
-            backend->add_stream(boost::shared_ptr<std::ostream>(&std::clog, boost::null_deleter()));
+            backend->add_stream(boost::shared_ptr<std::ostream>(&_destination, boost::null_deleter()));
             backend->auto_flush(true);
-            using sync_t = boost::log::sinks::asynchronous_sink<boost::log::sinks::text_ostream_backend>;
-            const auto sink{boost::make_shared<sync_t>(backend)};
-            sink->set_filter(boost::log::expressions::attr<SeverityLevel>("Severity") >= SeverityLevel::trace);
+            return backend;
+        };
+
+        auto get_frontend = [get_backend](std::ostream& destination)
+        {
+            auto sink{boost::make_shared<sink_t>(get_backend(destination))};
             sink->set_formatter(
                                 boost::log::expressions::stream
                                 << boost::log::expressions::format_date_time<boost::posix_time::ptime>(
@@ -61,14 +58,26 @@ namespace cm::pg::cpp::mt::logging
                                 << "T: " << boost::log::expressions::attr<
                                     boost::log::attributes::current_thread_id::value_type>("ThreadID") << "] "
                                 << boost::log::expressions::smessage);
-            logger->add_sink(sink);
-            /* === END OF SINKS === */
-        }
+            return std::move(sink);
+        };
+
+        boost::log::add_common_attributes();
+        auto const logger{boost::log::core::get()};
+
+        // stdout.
+        auto const stdout_sink{get_frontend(std::cout)};
+        stdout_sink->set_filter(boost::log::expressions::attr<SeverityLevel>("Severity") < SeverityLevel::warning);
+        logger->add_sink(stdout_sink);
+
+        // stderr.
+        auto const stderr_sink{get_frontend(std::cerr)};
+        stderr_sink->set_filter(boost::log::expressions::attr<SeverityLevel>("Severity") >= SeverityLevel::warning);
+        logger->add_sink(stderr_sink);
     }
 
     Logger::Logger()
     {
-        init_logging();
+        set_console_sink();
     }
 
     Logger::~Logger()
