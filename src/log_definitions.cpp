@@ -6,8 +6,8 @@
 #include <boost/core/null_deleter.hpp>
 #include <boost/log/sinks/text_ostream_backend.hpp>
 #include <boost/log/sinks/async_frontend.hpp>
-#include <boost/log/attributes/constant.hpp>
 #include <boost/log/expressions.hpp>
+#include <boost/log/utility/setup/common_attributes.hpp>
 
 namespace cm::pg::cpp::mt::logging
 {
@@ -16,7 +16,7 @@ namespace cm::pg::cpp::mt::logging
         void init_logging()
         {
             auto const logger{boost::log::core::get()};
-            logger->add_global_attribute("Severity", boost::log::attributes::constant<SeverityLevel>(SeverityLevel::trace));
+            boost::log::add_common_attributes();
 
             /* === SINKS === */
 
