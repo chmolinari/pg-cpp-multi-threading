@@ -1,9 +1,10 @@
 #ifndef MULTI_THREADING_LOG_DEFINITIONS_HPP
 #define MULTI_THREADING_LOG_DEFINITIONS_HPP
 
+
+#include <boost/log/core.hpp>
 #include <boost/log/sources/global_logger_storage.hpp>
 #include <boost/log/sources/severity_logger.hpp>
-#include <boost/log/sources/severity_feature.hpp>
 #include <boost/log/sources/record_ostream.hpp>
 
 namespace cm::pg::cpp::mt::logging
@@ -20,6 +21,13 @@ namespace cm::pg::cpp::mt::logging
 
     BOOST_LOG_INLINE_GLOBAL_LOGGER_DEFAULT(glog, boost::log::sources::severity_logger_mt<cm::pg::cpp::mt::logging::
                                            SeverityLevel>);
+
+    class Logger
+    {
+    public:
+        Logger();
+        ~Logger();
+    };
 }
 
 #endif //MULTI_THREADING_LOG_DEFINITIONS_HPP

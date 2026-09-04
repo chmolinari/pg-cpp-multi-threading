@@ -7,6 +7,7 @@ using glog = cm::pg::cpp::mt::logging::glog;
 
 int main()
 {
+    cm::pg::cpp::mt::logging::Logger const logging_guard;
     BOOST_LOG_SEV(glog::get(), sl::fatal) << "Hello, World!";
     return EXIT_SUCCESS;
 }

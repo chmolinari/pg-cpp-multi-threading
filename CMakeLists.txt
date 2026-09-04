@@ -23,6 +23,7 @@ target_sources(
 
         PRIVATE
         src/main.cpp
+        src/log_definitions.cpp
 )
 target_link_libraries(
         ${BUILD_NAME}
