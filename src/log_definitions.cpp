@@ -48,6 +48,7 @@ namespace cm::pg::cpp::mt::logging
         auto get_frontend = [get_backend](std::ostream& destination)
         {
             auto sink{boost::make_shared<sink_t>(get_backend(destination))};
+            sink->set_filter(boost::log::expressions::attr<SeverityLevel>("Severity") >= SeverityLevel::trace);
             sink->set_formatter(
                                 boost::log::expressions::stream
                                 << boost::log::expressions::format_date_time<boost::posix_time::ptime>(
@@ -66,13 +67,7 @@ namespace cm::pg::cpp::mt::logging
 
         // stdout.
         auto const stdout_sink{get_frontend(std::cout)};
-        stdout_sink->set_filter(boost::log::expressions::attr<SeverityLevel>("Severity") < SeverityLevel::warning);
         logger->add_sink(stdout_sink);
-
-        // stderr.
-        auto const stderr_sink{get_frontend(std::cerr)};
-        stderr_sink->set_filter(boost::log::expressions::attr<SeverityLevel>("Severity") >= SeverityLevel::warning);
-        logger->add_sink(stderr_sink);
     }
 
     Logger::Logger()
