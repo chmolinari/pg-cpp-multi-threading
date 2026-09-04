@@ -1,6 +1,6 @@
 #include <cstdlib>
 
-#include "log_definitions.hpp"
+#include "../include/log_definitions.hpp"
 
 using sl   = cm::pg::cpp::mt::logging::SeverityLevel;
 using glog = cm::pg::cpp::mt::logging::glog;

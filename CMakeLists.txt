@@ -14,8 +14,15 @@ add_executable(${BUILD_NAME})
 target_sources(
         ${BUILD_NAME}
 
+        PUBLIC
+        FILE_SET ${BUILD_NAME}_headers
+        TYPE HEADERS
+        BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include
+        FILES
+        include/log_definitions.hpp
+
         PRIVATE
-        main.cpp
+        src/main.cpp
 )
 target_link_libraries(
         ${BUILD_NAME}
