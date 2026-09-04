@@ -2,6 +2,8 @@
 #define MULTI_THREADING_LOG_DEFINITIONS_HPP
 
 
+#include <ostream>
+
 #include <boost/log/core.hpp>
 #include <boost/log/sources/global_logger_storage.hpp>
 #include <boost/log/sources/severity_logger.hpp>
@@ -18,6 +20,8 @@ namespace cm::pg::cpp::mt::logging
         error   = 2,
         fatal   = 3
     };
+
+    std::ostream& operator<<(std::ostream& out_stream, SeverityLevel severity_level);
 
     BOOST_LOG_INLINE_GLOBAL_LOGGER_DEFAULT(glog, boost::log::sources::severity_logger_mt<cm::pg::cpp::mt::logging::
                                            SeverityLevel>);
